@@ -19,14 +19,16 @@ class EngPreprocessing():
   def __init__(self):
     pass
 
-  def preprocess2sent(self, input):
+  @classmethod
+  def preprocess2sent(cls, input):
     text = self.replace_num(input)
     text = self.lowercasing(text)
     sent_list = sent_tokenize(text)
 
     return sent_list
 
-  def preprocess2word(self, input):
+  @classmethod
+  def preprocess2word(cls, input):
     text = self.replace_num(input)
     text = self.lowercasing(text)
     tokens = word_tokenize(text)
@@ -35,7 +37,8 @@ class EngPreprocessing():
     
     return tokens_stem
 
-  def replace_num(self, text):
+  @classmethod
+  def replace_num(cls, text):
     newtext = text
 
     # remove date time ?
@@ -50,11 +53,13 @@ class EngPreprocessing():
     newtext = re.sub(r'-?\d+([.,]\d+)*', ' num', newtext)
     return newtext
 
-  def lowercasing(self, text):
+  @classmethod
+  def lowercasing(cls, text):
     text1 = text
     return text1.lower()
 
-  def rm_stopword_punct(self, tokens):
+  @classmethod
+  def rm_stopword_punct(cls, tokens):
     stopwords_english = stopwords.words('english') 
     tokens_clean = []
 
@@ -63,8 +68,9 @@ class EngPreprocessing():
             word not in punctuations):          # remove punctuation
             tokens_clean.append(word)
     return tokens_clean
-    
-  def stemming(self, tokens):
+  
+  @classmethod
+  def stemming(cls, tokens):
     # Instantiate stemming class
     stemmer = PorterStemmer() 
 
@@ -76,7 +82,8 @@ class EngPreprocessing():
         tokens_stem.append(stem_word)  # append to the list
     return tokens_stem
 
-  def lemmatize(self, text):
+  @classmethod
+  def lemmatize(cls, text):
     # Instantiate stemming class
     lemmatizer = WordNetLemmatizer()
     
