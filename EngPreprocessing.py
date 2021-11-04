@@ -1,18 +1,10 @@
-# library for regular expression operations
 import re
 
-from nltk import word_tokenize, sent_tokenize, download
+from nltk import word_tokenize, sent_tokenize
 # module for stop words that come with NLTK
 from nltk.corpus import stopwords
-from nltk.stem import PorterStemmer             # module for stemming
-from nltk.stem import WordNetLemmatizer         # module for lemmatization
-
-# download the English stopwords from NLTK
-download('stopwords')
-# download the pre-trained Punkt tokenizer for English, using for PorterStemmer module
-download('punkt')
-# download wornet for English, using for WordNetLemmatizer module
-download('wordnet')
+from nltk.stem import PorterStemmer         # module for stemming
+from nltk.stem import WordNetLemmatizer     # module for lemmatization
 
 # Get punctuations sring from NLTK
 punctuations = """!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~…“”–"""
@@ -22,23 +14,26 @@ class EngPreprocessing():
     def __init__(self):
         pass
 
-    def preprocess2sent(self, input):
-        text = self.replace_num(input)
-        text = self.lowercasing(text)
+    @classmethod
+    def preprocess2sent(cls, input):
+        text = cls.replace_num(input)
+        text = cls.lowercasing(text)
         sent_list = sent_tokenize(text)
 
         return sent_list
 
-    def preprocess2word(self, input):
-        text = self.replace_num(input)
-        text = self.lowercasing(text)
+    @classmethod
+    def preprocess2word(cls, input):
+        text = cls.replace_num(input)
+        text = cls.lowercasing(text)
         tokens = word_tokenize(text)
-        tokens_clean = self.rm_stopword_punct(tokens)
-        # tokens_stem = self.stemming(tokens_clean)
+        tokens_clean = cls.rm_stopword_punct(tokens)
+        tokens_stem = cls.stemming(tokens_clean)
 
-        return tokens_clean
+        return tokens_stem
 
-    def replace_num(self, text):
+    @classmethod
+    def replace_num(cls, text):
         newtext = text
 
         # remove date time ?
@@ -53,21 +48,24 @@ class EngPreprocessing():
         newtext = re.sub(r'-?\d+([.,]\d+)*', ' num', newtext)
         return newtext
 
-    def lowercasing(self, text):
+    @classmethod
+    def lowercasing(cls, text):
         text1 = text
         return text1.lower()
 
-    def rm_stopword_punct(self, tokens):
+    @classmethod
+    def rm_stopword_punct(cls, tokens):
         stopwords_english = stopwords.words('english')
         tokens_clean = []
 
         for word in tokens:                         # Go through every word in your tokens list
             if (word not in stopwords_english and   # remove stopwords
-                    word not in punctuations):          # remove punctuation
+                    word not in punctuations):      # remove punctuation
                 tokens_clean.append(word)
         return tokens_clean
 
-    def stemming(self, tokens):
+    @classmethod
+    def stemming(cls, tokens):
         # Instantiate stemming class
         stemmer = PorterStemmer()
 
@@ -76,10 +74,11 @@ class EngPreprocessing():
 
         for word in tokens:
             stem_word = stemmer.stem(word)  # stemming word
-            tokens_stem.append(stem_word)  # append to the list
+            tokens_stem.append(stem_word)   # append to the list
         return tokens_stem
 
-    def lemmatize(self, text):
+    @classmethod
+    def lemmatize(cls, text):
         # Instantiate stemming class
         lemmatizer = WordNetLemmatizer()
 
@@ -88,5 +87,5 @@ class EngPreprocessing():
 
         for word in tokens:
             lemma_word = lemmatizer.lemmatize(word)  # stemming word
-            tokens_lemma.append(lemma_word)  # append to the list
+            tokens_lemma.append(lemma_word)         # append to the list
         return tokens_lemma

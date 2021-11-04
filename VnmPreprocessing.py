@@ -20,10 +20,10 @@ class VnmPreprocessing():
 
     @classmethod
     def preprocess2sent(cls, input):
-        text = self.replace_num(input)
-        text = self.standardize_unicode(text)
-        text = self.standardize_marks(text)
-        text = self.lowercasing(text)
+        text = cls.replace_num(input)
+        text = cls.standardize_unicode(text)
+        text = cls.standardize_marks(text)
+        text = cls.lowercasing(text)
 
         sent_list = sent_tokenize(text)
 
@@ -31,12 +31,12 @@ class VnmPreprocessing():
 
     @classmethod
     def preprocess2word(cls, input):
-        text = self.replace_num(input)
-        text = self.standardize_unicode(text)
-        text = self.standardize_marks(text)
+        text = cls.replace_num(input)
+        text = cls.standardize_unicode(text)
+        text = cls.standardize_marks(text)
 
         tokens = word_tokenize(text)
-        tokens_clean = self.lower_rm_stopword_punct(tokens)
+        tokens_clean = cls.lower_rm_stopword_punct(tokens)
 
         return tokens_clean
 
@@ -78,6 +78,6 @@ class VnmPreprocessing():
         for word in tokens:                         # Go through every word in your tokens list
             word = word.lower()                     # Lowercasing
             if (word not in vnm_stopwords and       # remove stopwords
-                    word not in punctuations):          # remove punctuation
+                    word not in punctuations):      # remove punctuation
                 tokens_clean.append(word)
         return tokens_clean
