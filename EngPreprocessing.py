@@ -53,6 +53,10 @@ class EngPreprocessing():
         text1 = text
         return text1.lower()
 
+    @staticmethod
+    def tokenization(text):
+        return word_tokenize(text)
+
     @classmethod
     def rm_stopword_punct(cls, tokens):
         stopwords_english = stopwords.words('english')
