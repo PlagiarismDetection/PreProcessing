@@ -40,6 +40,10 @@ class VnmPreprocessing():
 
         return tokens_clean
 
+    @staticmethod
+    def tokenization(text):
+        return word_tokenize(text)
+
     @classmethod
     def replace_num(cls, text):
         newtext = text
