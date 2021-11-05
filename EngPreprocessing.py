@@ -78,7 +78,7 @@ class EngPreprocessing():
         return tokens_stem
 
     @classmethod
-    def lemmatize(cls, text):
+    def lemmatize(cls, tokens):
         # Instantiate stemming class
         lemmatizer = WordNetLemmatizer()
 
