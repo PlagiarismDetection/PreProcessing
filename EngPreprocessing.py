@@ -28,9 +28,9 @@ class EngPreprocessing():
         text = cls.lowercasing(text)
         tokens = word_tokenize(text)
         tokens_clean = cls.rm_stopword_punct(tokens)
-        tokens_stem = cls.stemming(tokens_clean)
+        # tokens_stem = cls.stemming(tokens_clean)
 
-        return tokens_stem
+        return tokens_clean
 
     @classmethod
     def replace_num(cls, text):
